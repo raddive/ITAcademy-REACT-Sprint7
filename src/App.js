@@ -3,13 +3,31 @@ import logo from './images/atomo.png';
 import './css/App.css';
 
 
+function WebOptions(props)
+{
+  return (
+    <div className='web-options'>
+      <label>Número de páginas: </label>
+      <input onChange={(event) => props.setNumPaginas(event.target.valueAsNumber)} type="number" min="1"></input><br/>
+      <label>Número de idiomas: </label>
+      <input onChange={(event) => props.setNumIdiomas(event.target.valueAsNumber)} type="number" min="1"></input><br/>
+    </div>
+    )
+
+};
+
+
 function Checkbox(props)
 {
   return(
     <>
-      <input type="checkbox" id={props.idText} name={props.idText} value={props.idText} 
+      <input type="checkbox" id={props.id} name={props.idText} value={props.idText} 
           onClick={props.handlerClick} defaultChecked={props.default ? true : false}/>
       <label htmlFor="html">{props.txt} ({props.precio}€)</label><br/>
+      {props.defaultChecked && props.id===0 && <WebOptions 
+                                                  setNumPaginas={props.setNumPaginas}
+                                                  setNumIdiomas={props.setNumIdiomas}
+                                                   />}
     </>
   )
 };
@@ -24,13 +42,14 @@ function App() {
                                    {id:1,txt:"Una campaña SEO",precio:300,idText:"seo"},
                                    {id:2,txt:"Una campaña de publicidad",precio:200,idText:"pub"}]);
   const [checkStates,setCheckStates] = useState([false,false,false]);
-
+  const [numPaginas,setNumPaginas] = useState(0);
+  const [numIdiomas,setNumIdiomas] = useState(0);
 //USE EFFECTS
   useEffect(() => 
     {
-      // console.log("cambio de state");
+      console.log("cambio de state");
       setTotal( () => calculateTotal());
-    },[checkStates]);
+    },[checkStates,numPaginas,numIdiomas]);
       
 //COMPONENTES
 const checkBoxes = data.map( item =>
@@ -42,6 +61,9 @@ const checkBoxes = data.map( item =>
               defaultChecked = {checkStates[item.id]}
               txt = {item.txt}
               precio = {item.precio}
+              setNumPaginas = {setNumPaginas}
+              setNumIdiomas = {setNumIdiomas}
+
     />)
   }
 );
@@ -50,11 +72,14 @@ const checkBoxes = data.map( item =>
 //LOGICA
   function calculateTotal()
   {
+    console.log("calculateTotal");
     let iTotal = 0;
     let iAux;
     for(iAux=0;iAux<data.length;iAux++)
       iTotal += checkStates[iAux] ? data[iAux].precio : 0;
 
+    
+    iTotal += numPaginas*numIdiomas*30;
     return iTotal;
   };
 

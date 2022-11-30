@@ -5,7 +5,7 @@
 .App-logo {
   height: 20vmin;
   pointer-events: none;
-  margin-top: 20vmin;
+  margin-top: 10vmin;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -53,4 +53,19 @@
   100% {
     transform: rotate(360deg) scale(100%);
   }
+}
+
+.web-options{
+  margin: 5vmin;
+  padding: 2vmin;
+  border: 1pt solid lightslategray;
+
+}
+.web-options > input {
+  width: 6vmin;
+  height: 3vmin;
+  margin-right: 1vmin;
+  font-size: inherit;
+  color: lightslategrey;
+  text-align: end;
 }

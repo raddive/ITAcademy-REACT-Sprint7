@@ -4,7 +4,7 @@
 # N1.E1 Tres checkboxes mitjançant els quals l'usuari/ària podrà decidir quin pressupost vol obtenir
 # N1.E1-1 refactorización
 #
-# N1.E2 
+# N1.E2 oferirem l'opció d'ajustar un dels serveis: crear una pàgina web, podent triar el nombre de pàgines i d'idiomes.
 #
 # N1.E3
 #
