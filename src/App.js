@@ -2,41 +2,68 @@ import React, { useState, useEffect } from 'react';
 import logo from './images/atomo.png';
 import './css/App.css';
 
+
+function Checkbox(props)
+{
+  return(
+    <>
+      <input type="checkbox" id={props.idText} name={props.idText} value={props.idText} 
+          onClick={props.handlerClick} defaultChecked={props.default ? true : false}/>
+      <label htmlFor="html">{props.txt} ({props.precio}€)</label><br/>
+    </>
+  )
+};
+
+
 function App() {
 
-  const options = ["Una página WEB (500€)","Una campaña SEO (300€)","Una campaña de publicidad (200€)"];
-  // console.log(options);
+
+//USE STATES
   const [total, setTotal] = useState(0);
+  const [data] = useState([{id:0,txt:"Una página WEB",precio:500,idText:"web"},
+                                   {id:1,txt:"Una campaña SEO",precio:300,idText:"seo"},
+                                   {id:2,txt:"Una campaña de publicidad",precio:200,idText:"pub"}]);
   const [checkStates,setCheckStates] = useState([false,false,false]);
-  // console.log(checkStates);
 
 //USE EFFECTS
   useEffect(() => 
     {
       // console.log("cambio de state");
-      setTotal( () => {
-        const c0=checkStates[0] ? 500 : 0;
-        const c1=checkStates[1] ? 300 : 0;
-        const c2=checkStates[2] ? 200 : 0;
-        return c0+c1+c2;
-      })
-    }
-    , [checkStates]);
+      setTotal( () => calculateTotal());
+    },[checkStates]);
+      
+//COMPONENTES
+const checkBoxes = data.map( item =>
+  {
+    return (<Checkbox key={item.id}
+              id= {item.id}
+              idText={item.idText}
+              handlerClick={() => toogleOneState(item.id)} 
+              defaultChecked = {checkStates[item.id]}
+              txt = {item.txt}
+              precio = {item.precio}
+    />)
+  }
+);
 
+
+//LOGICA
+  function calculateTotal()
+  {
+    let iTotal = 0;
+    let iAux;
+    for(iAux=0;iAux<data.length;iAux++)
+      iTotal += checkStates[iAux] ? data[iAux].precio : 0;
+
+    return iTotal;
+  };
 
   function toogleOneState(iIndex){
-    // console.log(toogleOneState);
     setCheckStates( prevStates => {
-      return prevStates.map( (state,index) =>
-        {
-          if(index===iIndex)
-            return !state;
-          else
-            return state; 
-        }
-      )
+      return prevStates.map( (state,index) => (index===iIndex ? !state : state));
     })
   };
+
 
   return (
     <div className="AonClick={addItem(0)}pp">
@@ -44,12 +71,7 @@ function App() {
       App-header">
         <h1>Qué quieres hacer?</h1>
         <div className='App-form'>
-          <input type="checkbox" id="web" name="input_pres" value="WEB" onClick={(event) => toogleOneState(0)} defaultChecked={checkStates[0] ? true : false}/>
-          <label htmlFor="html">Una página WEB (500€)</label><br/>
-          <input type="checkbox" id="seo" name="input_pres" value="SEO" onClick={(event) => toogleOneState(1)} defaultChecked={checkStates[1] ? true : false}/>
-          <label htmlFor="css">Una campaña SEO (300€)</label><br/>
-          <input type="checkbox" id="publi" name="input_pres" value="PUBLI" onClick={(event) => toogleOneState(2)} defaultChecked={checkStates[2] ? true : false}/>
-          <label htmlFor="javascript">Una campaña de publicidad (200€)</label><br/>
+          {checkBoxes}
         </div>
         <h2>Precio total: {total} €</h2>
       <img src={logo} className="App-logo" alt="logo" />

@@ -1,7 +1,8 @@
 # IT Academy - REACT
 # Srint 6. Intro React
 #
-# N1.E1 
+# N1.E1 Tres checkboxes mitjançant els quals l'usuari/ària podrà decidir quin pressupost vol obtenir
+# N1.E1-1 refactorización
 #
 # N1.E2 
 #
