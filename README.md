@@ -6,7 +6,7 @@
 #
 # N1.E2 oferirem l'opció d'ajustar un dels serveis: crear una pàgina web, podent triar el nombre de pàgines i d'idiomes.
 #
-# N1.E3
+# N1.E3 posarem uns botons als costats de l'input perquè de manera fàcil pugui modificar la seva selecció.
 #
 # N1.E4
 #

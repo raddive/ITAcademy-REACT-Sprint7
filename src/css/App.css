@@ -5,7 +5,7 @@
 .App-logo {
   height: 20vmin;
   pointer-events: none;
-  margin-top: 10vmin;
+  margin-top: 5vmin;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -59,13 +59,74 @@
   margin: 5vmin;
   padding: 2vmin;
   border: 1pt solid lightslategray;
+  border-radius: 5pt;
 
 }
-.web-options > input {
+
+.web-options--line{
+  display: flex;
+  margin: 2vmin;;
+}
+/* .web-options > input {
   width: 6vmin;
   height: 3vmin;
   margin-right: 1vmin;
   font-size: inherit;
   color: lightslategrey;
   text-align: end;
+} */
+
+
+.input {
+  display: flex;
+  align-items: flex-end;
+  padding-left: 2vmin;
+}
+
+.input > button {
+  height: 3vmin;
+  width: 3vmin;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background-color: coral;
+  color: #D9D9D9;
+  font-size: 1.5rem;
+}
+
+.input > button:hover {
+  background-color: #404040;
+  color: #D9D9D9;
+}
+
+.input > button:focus {
+  outline: none;
+}
+
+.input--count {
+  font-size: 1.5rem;
+  height: 3vmin;
+  width: 5vmin;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: lightslategray;
+}
+.input--count > input {
+  width: 4vmin;
+  height: 3vmin;
+  margin: 0vmin 5vmin;
+  font-size: inherit;
+  color: lightslategrey;
+  text-align: end;
+}
+
+.input--plus {
+  /* margin-left: -20px; */
+}
+
+.input--minus {
+  /* margin-right: -20px; */
+  z-index: 1;
 }

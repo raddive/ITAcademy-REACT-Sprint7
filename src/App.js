@@ -3,14 +3,63 @@ import logo from './images/atomo.png';
 import './css/App.css';
 
 
+
+function Input(props)
+{
+  const [value,setValue] = useState(0);
+
+  useEffect(() => 
+  {
+    onChange();
+  },[value]);
+
+  function onChange()
+  {
+    return props.changeValue(value)
+  }
+
+  function Decrease()
+  {
+    setValue(prev => prev-1);
+  }
+
+  function Increase()
+  {
+    setValue(prev => prev+1);
+  }
+
+  return (
+    <>
+      <div className="input">
+              <button className="input--minus" onClick={Decrease}>–</button>
+              <div className="input--count">
+                  <input 
+                      type="text" 
+                      inputMode="numeric" 
+                      value={value}
+                      onChange={(event) => setValue(Number(event.target.value))}></input>
+              </div>
+              <button className="input--plus" onClick={Increase}>+</button>
+      </div>
+    </>
+  )
+};
+
 function WebOptions(props)
 {
   return (
     <div className='web-options'>
-      <label>Número de páginas: </label>
-      <input onChange={(event) => props.setNumPaginas(event.target.valueAsNumber)} type="number" min="1"></input><br/>
-      <label>Número de idiomas: </label>
-      <input onChange={(event) => props.setNumIdiomas(event.target.valueAsNumber)} type="number" min="1"></input><br/>
+      <div className="web-options--line">
+        <label>Número de páginas: </label>
+        <Input 
+        changeValue = {props.setNumPaginas}
+        />
+      </div>
+      <div className="web-options--line">
+        <label>Número de idiomas: </label>
+        <Input 
+          changeValue = {props.setNumIdiomas}/>
+      </div>
     </div>
     )
 
@@ -47,7 +96,6 @@ function App() {
 //USE EFFECTS
   useEffect(() => 
     {
-      console.log("cambio de state");
       setTotal( () => calculateTotal());
     },[checkStates,numPaginas,numIdiomas]);
       
@@ -72,7 +120,6 @@ const checkBoxes = data.map( item =>
 //LOGICA
   function calculateTotal()
   {
-    console.log("calculateTotal");
     let iTotal = 0;
     let iAux;
     for(iAux=0;iAux<data.length;iAux++)
