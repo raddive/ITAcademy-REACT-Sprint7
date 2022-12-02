@@ -10,7 +10,7 @@
 #
 # N1.E4 guardar les dades dels camps seleccionats per l'usuari en localstorage.
 #
-# N1.E5
+# N1.E5 implementar una pantalla de benvinguda per l'usuari/ària, on s'expliqui el propòsit i funcionament de la web utilitzant el routing de React.
 #
 # N2.E6
 #

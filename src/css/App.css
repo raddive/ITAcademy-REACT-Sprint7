@@ -1,5 +1,7 @@
-.App {
+.App,.Landing {
   text-align: center;
+  color: grey;
+
 }
 
 .App-logo {
@@ -20,7 +22,6 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: grey;
 }
 
 .App-form{
@@ -31,7 +32,13 @@
   width: 3vmin;
   height: 3vmin;
   margin-right: 1vmin;
+  
 }
+
+.App-form > input[type=checkbox] {
+  accent-color: coral;
+}
+
 
 .App-link {
   color: #61dafb;
@@ -55,6 +62,21 @@
   }
 }
 
+
+.Landing--text{
+  text-align: left;
+  margin-left: 15%;
+}
+
+.Landing--button{
+  font-size: 3rem;
+  color:grey;
+  background-image: linear-gradient(to right, coral, yellow);
+  padding: 1%;
+  margin: 2%;
+
+
+}
 .web-options{
   margin: 5vmin;
   padding: 2vmin;
@@ -89,7 +111,7 @@
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  background-color: coral;
+  background-image: linear-gradient(to right, coral, yellow);
   color: #D9D9D9;
   font-size: 1.5rem;
 }
@@ -120,13 +142,4 @@
   font-size: inherit;
   color: lightslategrey;
   text-align: end;
-}
-
-.input--plus {
-  /* margin-left: -20px; */
-}
-
-.input--minus {
-  /* margin-right: -20px; */
-  z-index: 1;
 }
