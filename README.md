@@ -8,7 +8,7 @@
 #
 # N1.E3 posarem uns botons als costats de l'input perquè de manera fàcil pugui modificar la seva selecció.
 #
-# N1.E4
+# N1.E4 guardar les dades dels camps seleccionats per l'usuari en localstorage.
 #
 # N1.E5
 #

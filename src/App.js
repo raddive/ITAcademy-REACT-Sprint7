@@ -6,10 +6,9 @@ import './css/App.css';
 
 function Input(props)
 {
-  const [value,setValue] = useState(0);
+  const [value,setValue] = useState(props.localStorageValue);
 
-  useEffect(() => 
-  {
+  useEffect(() => {
     onChange();
   },[value]);
 
@@ -20,7 +19,7 @@ function Input(props)
 
   function Decrease()
   {
-    setValue(prev => prev-1);
+    setValue(prev => prev>0 ? prev-1:prev);
   }
 
   function Increase()
@@ -53,12 +52,15 @@ function WebOptions(props)
         <label>Número de páginas: </label>
         <Input 
         changeValue = {props.setNumPaginas}
+        localStorageValue = {Number(localStorage.getItem("NumPaginas"))}
         />
       </div>
       <div className="web-options--line">
         <label>Número de idiomas: </label>
         <Input 
-          changeValue = {props.setNumIdiomas}/>
+          changeValue = {props.setNumIdiomas}
+          localStorageValue = {Number(localStorage.getItem("NumIdiomas"))}
+        />
       </div>
     </div>
     )
@@ -71,9 +73,9 @@ function Checkbox(props)
   return(
     <>
       <input type="checkbox" id={props.id} name={props.idText} value={props.idText} 
-          onClick={props.handlerClick} defaultChecked={props.default ? true : false}/>
+          onClick={props.handlerClick} defaultChecked={props.defaultChecked ? true : false}/>
       <label htmlFor="html">{props.txt} ({props.precio}€)</label><br/>
-      {props.defaultChecked && props.id===0 && <WebOptions 
+      {props.id===0 && props.defaultChecked && <WebOptions 
                                                   setNumPaginas={props.setNumPaginas}
                                                   setNumIdiomas={props.setNumIdiomas}
                                                    />}
@@ -86,17 +88,23 @@ function App() {
 
 
 //USE STATES
+
   const [total, setTotal] = useState(0);
   const [data] = useState([{id:0,txt:"Una página WEB",precio:500,idText:"web"},
-                                   {id:1,txt:"Una campaña SEO",precio:300,idText:"seo"},
-                                   {id:2,txt:"Una campaña de publicidad",precio:200,idText:"pub"}]);
-  const [checkStates,setCheckStates] = useState([false,false,false]);
+                           {id:1,txt:"Una campaña SEO",precio:300,idText:"seo"},
+                           {id:2,txt:"Una campaña de publicidad",precio:200,idText:"pub"}]);
+  const [checkStates,setCheckStates] = useState(JSON.parse(localStorage.getItem("States")));
   const [numPaginas,setNumPaginas] = useState(0);
   const [numIdiomas,setNumIdiomas] = useState(0);
 //USE EFFECTS
+
+
   useEffect(() => 
     {
       setTotal( () => calculateTotal());
+      localStorage.setItem("States",JSON.stringify(checkStates));
+      localStorage.setItem("NumPaginas",numPaginas);
+      localStorage.setItem("NumIdiomas",numIdiomas);
     },[checkStates,numPaginas,numIdiomas]);
       
 //COMPONENTES
@@ -125,7 +133,12 @@ const checkBoxes = data.map( item =>
     for(iAux=0;iAux<data.length;iAux++)
       iTotal += checkStates[iAux] ? data[iAux].precio : 0;
 
-    
+    if(!checkStates[0])
+    {
+      setNumIdiomas(0);
+      setNumPaginas(0);
+    }
+
     iTotal += numPaginas*numIdiomas*30;
     return iTotal;
   };
@@ -138,9 +151,8 @@ const checkBoxes = data.map( item =>
 
 
   return (
-    <div className="AonClick={addItem(0)}pp">
-      <header className="
-      App-header">
+    <div className="App">
+      <header className="App-header">
         <h1>Qué quieres hacer?</h1>
         <div className='App-form'>
           {checkBoxes}
