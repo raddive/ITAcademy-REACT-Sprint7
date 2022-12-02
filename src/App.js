@@ -89,18 +89,45 @@ function App() {
 
 //USE STATES
 
-  const [total, setTotal] = useState(0);
   const [data] = useState([{id:0,txt:"Una página WEB",precio:500,idText:"web"},
                            {id:1,txt:"Una campaña SEO",precio:300,idText:"seo"},
                            {id:2,txt:"Una campaña de publicidad",precio:200,idText:"pub"}]);
-  const [checkStates,setCheckStates] = useState(JSON.parse(localStorage.getItem("States")));
-  const [numPaginas,setNumPaginas] = useState(0);
-  const [numIdiomas,setNumIdiomas] = useState(0);
-//USE EFFECTS
+
+  const [total, setTotal] = useState(0);
+  const [checkStates,setCheckStates] = useState(localStorage.getItem("States")? JSON.parse(localStorage.getItem("States")): [false,false,false]);
+  const [numPaginas,setNumPaginas] = useState(localStorage.getItem("NumPaginas")? Number(localStorage.getItem("NumPaginas")): 0);
+  const [numIdiomas,setNumIdiomas] = useState(localStorage.getItem("NumIdiomas")? Number(localStorage.getItem("NumIdiomas")): 0);
+
+  //TODO NO FUNCIONA
+  // const [checkStates,setCheckStates] = useState([true,false,false]);
+  // const [numPaginas,setNumPaginas] = useState(0);
+  // const [numIdiomas,setNumIdiomas] = useState(0);
+  
+
+  function ClearLocalStorage()
+  {
+    localStorage.removeItem("States");
+    localStorage.removeItem("NumPaginas");
+    localStorage.removeItem("NumIdiomas");
+    localStorage.removeItem("bWEB");
+  }
+  //USE EFFECTS
+
+
+  useEffect(() => 
+    { 
+  //TODO NO FUNCIONA
+      //console.log("Primera vez");
+      //console.log(localStorage.getItem("States"));
+      // setCheckStates(localStorage.getItem("States")!==null ? JSON.parse(localStorage.getItem("States")):[false,false,false]);
+      // setNumPaginas(Number(localStorage.getItem("NumPaginas"))>0?Number(localStorage.getItem("NumPaginas")):0);
+      // setNumIdiomas(Number(localStorage.getItem("NumIdiomas"))>0?Number(localStorage.getItem("NumIdiomas")):0);      
+    },[]);
 
 
   useEffect(() => 
     {
+      console.log("Effect function ran");
       setTotal( () => calculateTotal());
       localStorage.setItem("States",JSON.stringify(checkStates));
       localStorage.setItem("NumPaginas",numPaginas);
@@ -158,6 +185,7 @@ const checkBoxes = data.map( item =>
           {checkBoxes}
         </div>
         <h2>Precio total: {total} €</h2>
+      <button onClick={ClearLocalStorage}>LIMPIA STORAGE</button>
       <img src={logo} className="App-logo" alt="logo" />
       </header>
     </div>
