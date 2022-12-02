@@ -10,6 +10,7 @@ export default function WebOptions (props) {
         <Input 
         changeValue = {props.setNumPaginas}
         localStorageValue = {Number(localStorage.getItem("NumPaginas"))}
+        info ="Este componente debe indicar el número de páginas que tendrá su web"
         />
         </div>
         <div className="web-options--line">
@@ -17,6 +18,7 @@ export default function WebOptions (props) {
         <Input 
             changeValue = {props.setNumIdiomas}
             localStorageValue = {Number(localStorage.getItem("NumIdiomas"))}
+            info ="Este componente debe indicar el número de idiomas que tendrá su web"
         />
         </div>
     </div>

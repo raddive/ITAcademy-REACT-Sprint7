@@ -5,8 +5,6 @@ import logo from '../images/atomo.png';
 import Checkbox from '../components/Checkbox';
 
 function Presupuesto() {
-
-
 //USE STATES
 
   const [data] = useState([{id:0,txt:"Una página WEB",precio:500,idText:"web"},

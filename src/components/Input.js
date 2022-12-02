@@ -1,4 +1,5 @@
 import {React,useState,useEffect} from "react";
+import Info from "./Info";
 
 export default function Input (props) {
     const [value,setValue] = useState(props.localStorageValue);
@@ -23,18 +24,18 @@ export default function Input (props) {
     }
     
     return (
-        <>
         <div className="input">
-                <button className="input--minus" onClick={Decrease}>–</button>
-                <div className="input--count">
-                    <input 
-                        type="text" 
-                        inputMode="numeric" 
-                        value={value}
-                        onChange={(event) => setValue(Number(event.target.value))}></input>
-                </div>
-                <button className="input--plus" onClick={Increase}>+</button>
+            <button className="input--minus" onClick={Decrease}>–</button>
+            <div className="input--count">
+                <input 
+                    type="text" 
+                    inputMode="numeric" 
+                    value={value}
+                    onChange={(event) => setValue(Number(event.target.value))}></input>
+            </div>
+            <button className="input--plus" onClick={Increase}>+</button>
+            <Info 
+                info = {props.info} />
         </div>
-        </>
     )
 };
