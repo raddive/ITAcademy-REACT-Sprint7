@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+
 import logo from '../images/atomo.png';
+import sortAZ from '../images/sortAZ.png';
+import sortDate from '../images/sortDate.png';
+import sortRestart from '../images/sortRestart.png';
 
 
 import Checkbox from '../components/Checkbox';
@@ -25,6 +29,7 @@ function Main() {
   const listaActualPresupuestos=JSON.parse(localStorage.getItem("ListaPresupuestos"));
   const [listaPresupuestos,setListaPresupuestos] = useState(listaActualPresupuestos? [...listaActualPresupuestos]:
                                                                 []);
+  const [listaOriginalPresupuestos,setListaOriginalPresupuestos] =useState([]);
 
   
   // const [datosPresupuesto,setDatosPresupuesto] = useState( {
@@ -69,6 +74,7 @@ function Main() {
     useEffect(() => 
     {
       localStorage.setItem("ListaPresupuestos",JSON.stringify(listaPresupuestos));
+      
     },[listaPresupuestos]);
 
 //COMPONENTES
@@ -111,8 +117,9 @@ const presupuestos = listaPresupuestos.map( item =>
         {
           const index = prev.findIndex(object => object.nombre === datosPresupuesto.nombre);
           let currentDate = new Date();
-          let sCurrentDate=currentDate.getDate()+"/"+currentDate.getMonth()+"/"+currentDate.getFullYear()+" "+currentDate.getHours()+":"+currentDate.getMinutes()+":"+currentDate.getSeconds();
-          const datosPresupuestoFecha = {...datosPresupuesto,fecha:sCurrentDate}
+          let sCurrentDate=currentDate.toLocaleString('es-ES'); 
+          let sCurrentDate2=currentDate.toISOString();
+          const datosPresupuestoFecha = {...datosPresupuesto,fecha:sCurrentDate,sortFecha:sCurrentDate2}
           if (index === -1)
             return [...prev, datosPresupuestoFecha];
           else{
@@ -184,6 +191,42 @@ const presupuestos = listaPresupuestos.map( item =>
   }
 
 
+  function orderByName(iOrder){
+    if(!listaOriginalPresupuestos.length)  
+      setListaOriginalPresupuestos([...listaPresupuestos]);
+
+    let sortByDateBudgets = listaPresupuestos.sort(function (a, b) {
+      if (a.nombre > b.nombre) {
+        return 1;
+      }
+      if (a.nombre < b.nombre) {
+        return -1;
+      }
+      return 0;
+    });
+    setListaPresupuestos([...sortByDateBudgets]);
+  }
+
+  function orderByDate(iOrder){
+    if(!listaOriginalPresupuestos.length)
+      setListaOriginalPresupuestos([...listaPresupuestos]);
+
+    let sortByDateBudgets = listaPresupuestos.sort(function (a, b) {
+      if (a.sortFecha < b.sortFecha) {
+        return 1;
+      }
+      if (a.sortFecha > b.sortFecha) {
+        return -1;
+      }
+      return 0;
+    });
+    setListaPresupuestos([...sortByDateBudgets]);
+  }
+
+  function orderRestart(iOrder){
+    setListaPresupuestos([...listaOriginalPresupuestos]);
+  }
+
   return (
     <div className="App">
       <div className='Main-cols'> 
@@ -195,12 +238,19 @@ const presupuestos = listaPresupuestos.map( item =>
             {checkBoxes}
           </div>
           <h2>Precio total: {datosPresupuesto.total} €</h2>
-        <button className="App-button" onClick={addPresupuesto}>AÑADIR PRESUPUESTO</button>
+        <button className="App-button-small" onClick={addPresupuesto}>AÑADIR PRESUPUESTO</button>
         <img src={logo} className="App-logo" alt="logo" />
         <button onClick={clearLocalStorage}>LIMPIA STORAGE</button>
         </header>
         <div className='Main-right'>
           <h4>Presupuestos anteriores</h4>
+          <div style={{ textAlign:"right"}}>
+            <img src={sortAZ} className="Main-right-sort-icon" alt="sortAZ" onClick={orderByName}/>
+            <img src={sortDate} className="Main-right-sort-icon" alt="sortDate" onClick={orderByDate}/>
+            <img src={sortRestart} className="Main-right-sort-icon" alt="sortDate" onClick={orderRestart}/>
+          </div>
+          {/* <button className="App-button-small" onClick={orderByName}>ORDENAR NOMBRE</button>
+          <button className="App-button-small" onClick={orderByName}>ORDENAR NOMBRE</button> */}
           {presupuestos}
         </div>
       </div>

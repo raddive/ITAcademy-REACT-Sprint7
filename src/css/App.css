@@ -62,12 +62,15 @@
   }
 }
 
-.App-button{
+.App-button,.App-button-small {
   font-size: 3rem;
   color:grey;
   background-image: linear-gradient(to right, coral, yellow);
   padding: 1%;
   margin: 2%;
+}
+.App-button-small{
+ font-size: 1rem;
 }
 
 .Landing-text{
@@ -86,6 +89,10 @@
 .Main-right{
   width: 25%;
   text-align: left;
+}
+.Main-right-sort-icon{
+  width: 3vmin;
+  margin-left: 1vmin;
 }
 
 .Main-header{
