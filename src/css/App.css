@@ -62,21 +62,49 @@
   }
 }
 
-
-.Landing--text{
-  text-align: left;
-  margin-left: 15%;
-}
-
-.Landing--button{
+.App-button{
   font-size: 3rem;
   color:grey;
   background-image: linear-gradient(to right, coral, yellow);
   padding: 1%;
   margin: 2%;
-
-
 }
+
+.Landing-text{
+  text-align: left;
+  margin-left: 15%;
+}
+
+
+.Main-cols{
+  display: flex;
+}
+
+.Main-left{
+  width: 75%;
+}
+.Main-right{
+  width: 25%;
+  text-align: left;
+}
+
+.Main-header{
+  text-align: left;
+}
+ .Main-txtinput{
+  font-size: 2rem;
+  width: 60vmin;
+  height: 3vmin;
+  margin-bottom: 1vmin;
+ }
+
+.presupuesto{
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1pt solid coral;
+  margin-bottom: 10px;
+}
+
 .web-options{
   margin: 5vmin;
   padding: 2vmin;
@@ -173,3 +201,4 @@
   overflow: auto;
   font-size: medium;
 }
+

@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './css/App.css';
 
 import Landing from './pages/Landing';
-import Presupuesto from './pages/Presupuesto';
+import Main from './pages/Main';
 import NoPage from './pages/NoPage';
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/presupuesto" element={<Presupuesto />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
@@ -20,7 +20,7 @@ function App() {
 
 
   // return (
-  //   <Presupuesto />
+  //   <Main />
   // );
 }
 

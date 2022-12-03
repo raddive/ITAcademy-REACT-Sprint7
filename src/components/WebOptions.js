@@ -3,13 +3,15 @@ import React from "react";
 import Input from './Input';
 
 export default function WebOptions (props) { 
+    const numPaginas=Number(props.presupuesto.numPaginas);
+    const numIdiomas=Number(props.presupuesto.numIdiomas);
     return (
     <div className='web-options'>
         <div className="web-options--line">
         <label>Número de páginas: </label>
         <Input 
         changeValue = {props.setNumPaginas}
-        localStorageValue = {Number(localStorage.getItem("NumPaginas"))}
+        localStorageValue = {numPaginas}
         info ="Este componente debe indicar el número de páginas que tendrá su web"
         />
         </div>
@@ -17,7 +19,7 @@ export default function WebOptions (props) {
         <label>Número de idiomas: </label>
         <Input 
             changeValue = {props.setNumIdiomas}
-            localStorageValue = {Number(localStorage.getItem("NumIdiomas"))}
+            localStorageValue = {numIdiomas}
             info ="Este componente debe indicar el número de idiomas que tendrá su web"
         />
         </div>

@@ -12,9 +12,9 @@
 #
 # N1.E5 implementar una pantalla de benvinguda per l'usuari/ària, on s'expliqui el propòsit i funcionament de la web utilitzant el routing de React.
 #
-# N2.E6
+# N2.E6 nou component, consistent en un botó que quan és premut mostrarà un popup d'informació
 #
-# N2.E7
+# N2.E7 donar l'opció a l'usuari/ària perquè pugui generar diversos pressupostos.
 #
 # N2.E8
 #
