@@ -20,7 +20,7 @@
 #
 # N2.E9 implementar un cercador de pressupostos
 #
-# N2.E10
+# N2.E10 implementar la persistència del llistat de pressupostos generats.
 #
 # N3.E11
 #
