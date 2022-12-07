@@ -8,6 +8,7 @@ import sortRestart from '../images/sortRestart.png';
 
 import Checkbox from '../components/Checkbox';
 import Presupuesto from '../components/Presupuesto';
+import Toolbar from '../components/Toolbar';
 
 function Main() {
 //USE STATES
@@ -191,8 +192,8 @@ const presupuestos = listaPresupuestos.map( item =>
   }
 
 
-  function orderByName(iOrder){
-    if(!listaOriginalPresupuestos.length)  
+  function orderByName(){
+    if(!listaOriginalPresupuestos.length || listaOriginalPresupuestos.length !== listaPresupuestos.length)
       setListaOriginalPresupuestos([...listaPresupuestos]);
 
     let sortByDateBudgets = listaPresupuestos.sort(function (a, b) {
@@ -207,8 +208,8 @@ const presupuestos = listaPresupuestos.map( item =>
     setListaPresupuestos([...sortByDateBudgets]);
   }
 
-  function orderByDate(iOrder){
-    if(!listaOriginalPresupuestos.length)
+  function orderByDate(){
+    if(!listaOriginalPresupuestos.length || listaOriginalPresupuestos.length < listaPresupuestos.length)
       setListaOriginalPresupuestos([...listaPresupuestos]);
 
     let sortByDateBudgets = listaPresupuestos.sort(function (a, b) {
@@ -223,15 +224,33 @@ const presupuestos = listaPresupuestos.map( item =>
     setListaPresupuestos([...sortByDateBudgets]);
   }
 
-  function orderRestart(iOrder){
-    setListaPresupuestos([...listaOriginalPresupuestos]);
+  function orderRestart(){
+    if(!listaOriginalPresupuestos.length || listaOriginalPresupuestos.length < listaPresupuestos.length)
+      setListaOriginalPresupuestos([...listaPresupuestos]);
+    else
+      setListaPresupuestos([...listaOriginalPresupuestos]);
   }
+
+  function searchBudget(sSearchText){
+    if(sSearchText!=="")
+    {
+      if(!listaOriginalPresupuestos.length || listaOriginalPresupuestos.length < listaPresupuestos.length)
+        setListaOriginalPresupuestos([...listaPresupuestos]);
+
+      let searchBudgets = listaPresupuestos.filter(item => {return (item.nombre.includes(sSearchText));});
+      setListaPresupuestos([...searchBudgets]);
+    }
+  }
+
 
   return (
     <div className="App">
       <div className='Main-cols'> 
         <header className="App-header Main-left">
-          <h1>¿Qué quieres hacer?</h1>
+          <div className='Main-left-title'>
+            <img src={logo} className="App-logo" alt="logo" />
+            <h1>¿Qué quieres hacer?</h1>
+          </div>
           <div className='Main-header'>
             <input className='Main-txtinput' type="text" id="nombre" name="nombre" value={datosPresupuesto.nombre} onChange={handlerChange} placeholder="Nombre del presupuesto"/><br/>
             <input className='Main-txtinput' type="text" id="cliente" name="cliente" value={datosPresupuesto.cliente} onChange={handlerChange} placeholder="Nombre del cliente"/><br/>
@@ -239,18 +258,16 @@ const presupuestos = listaPresupuestos.map( item =>
           </div>
           <h2>Precio total: {datosPresupuesto.total} €</h2>
         <button className="App-button-small" onClick={addPresupuesto}>AÑADIR PRESUPUESTO</button>
-        <img src={logo} className="App-logo" alt="logo" />
+        
         <button onClick={clearLocalStorage}>LIMPIA STORAGE</button>
         </header>
         <div className='Main-right'>
-          <h4>Presupuestos anteriores</h4>
-          <div style={{ textAlign:"right"}}>
-            <img src={sortAZ} className="Main-right-sort-icon" alt="sortAZ" onClick={orderByName}/>
-            <img src={sortDate} className="Main-right-sort-icon" alt="sortDate" onClick={orderByDate}/>
-            <img src={sortRestart} className="Main-right-sort-icon" alt="sortDate" onClick={orderRestart}/>
-          </div>
-          {/* <button className="App-button-small" onClick={orderByName}>ORDENAR NOMBRE</button>
-          <button className="App-button-small" onClick={orderByName}>ORDENAR NOMBRE</button> */}
+          <Toolbar 
+            orderByName={orderByName}
+            orderByDate={orderByDate}
+            orderRestart={orderRestart}
+            searchBudget={searchBudget}
+          />
           {presupuestos}
         </div>
       </div>

@@ -1,3 +1,14 @@
+input {
+  width: 3vmin;
+  height: 3vmin;
+  margin-right: 1vmin;
+  
+}
+
+input[type=checkbox] {
+  accent-color: coral;
+}
+
 .App,.Landing {
   text-align: center;
   color: grey;
@@ -5,9 +16,9 @@
 }
 
 .App-logo {
-  height: 20vmin;
+  height: 15vmin;
   pointer-events: none;
-  margin-top: 5vmin;
+  margin: 3vmin 0vmin;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -20,7 +31,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
 }
 
@@ -28,16 +38,7 @@
   text-align: left;
 }
 
-.App-form > input {
-  width: 3vmin;
-  height: 3vmin;
-  margin-right: 1vmin;
-  
-}
 
-.App-form > input[type=checkbox] {
-  accent-color: coral;
-}
 
 
 .App-link {
@@ -84,11 +85,16 @@
 }
 
 .Main-left{
-  width: 75%;
+  width: 80%;
+  margin: 2vmin;
+}
+.Main-left-title{
+  display: flex;
+  align-items: center;
 }
 .Main-right{
-  width: 25%;
   text-align: left;
+  margin:2vmin;
 }
 .Main-right-sort-icon{
   width: 3vmin;
@@ -112,7 +118,21 @@
   margin-bottom: 10px;
 }
 
+.presupuesto > input {
+  width: 2vmin;
+  height: 2vmin;
+  margin-right: 1vmin;
+  
+}
+.presupuesto > input[type=checkbox]:disabled
+{
+    accent-color: red;
+     color:coral;
+}
+
+
 .web-options{
+  font-size: 1.5rem;
   margin: 5vmin;
   padding: 2vmin;
   border: 1pt solid lightslategray;
@@ -209,3 +229,29 @@
   font-size: medium;
 }
 
+.Toolbar {
+  text-align: right;
+}
+.Toolbar > div {
+  margin: 5px 0px 0px 5px ;
+  display:flex;
+}
+
+.Toolbar-searchbar{
+  display: flex;
+  margin: 1vmin;
+  margin-bottom: auto;
+}
+
+.Toolbar-searchbar-divicon{
+  display: flex;
+  height: fit-content;
+  align-items: center;
+}
+.Toolbar > div > input {
+font-size: 1.5rem;
+width: 80%;
+height: 2vmin;
+margin: 1vmin;
+padding: 5px;
+}

@@ -16,9 +16,9 @@
 #
 # N2.E7 donar l'opció a l'usuari/ària perquè pugui generar diversos pressupostos.
 #
-# N2.E8
+# N2.E8 implementar 3 botons (ordenar alfabèticament,ordenar per data els pressupostos,reinicialitzar l'ordre)
 #
-# N2.E9
+# N2.E9 implementar un cercador de pressupostos
 #
 # N2.E10
 #

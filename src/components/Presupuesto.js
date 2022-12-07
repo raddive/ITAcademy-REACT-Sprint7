@@ -11,7 +11,7 @@ export default function Presupuesto (props) {
           <h3>{item.nombre}</h3>
           <p>{item.cliente}</p>
           <p>{item.fecha}</p>
-          {b0===true && (<><input type="checkbox" id="bWEB" name="WEB" defaultChecked ={b0}/><label htmlFor="bWEB">WEB</label><br/>
+          {b0===true && (<><input type="checkbox" id="bWEB" name="WEB" defaultChecked ={b0} disabled/><label htmlFor="bWEB">WEB</label><br/>
           <ul>
             <li>
               Páginas: {item.numPaginas}
@@ -22,8 +22,8 @@ export default function Presupuesto (props) {
           </ul>
           </>)
           }
-          {b1 && <><input type="checkbox" id="bSEO" name="bSEO" defaultChecked={item.checkStates[1]} /><label htmlFor="bSEO">SEO</label><br/></>}
-          {b2 && <><input type="checkbox" id="bMKT" name="MARKETING" defaultChecked={item.checkStates[2]} /><label htmlFor="bMKT">MARKETING</label><br/></>}
+          {b1 && <><input type="checkbox" id="bSEO" name="bSEO" defaultChecked={b1} disabled/><label htmlFor="bSEO">SEO</label><br/></>}
+          {b2 && <><input type="checkbox" id="bMKT" name="MARKETING" defaultChecked={b2} disabled /><label htmlFor="bMKT">MARKETING</label><br/></>}
           <h4>Total: {item.total}</h4>
         </div>
       );
