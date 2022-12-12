@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useParams} from 'react-router-dom';
 
 import logo from '../images/atomo.png';
 import sortAZ from '../images/sortAZ.png';
@@ -10,88 +11,94 @@ import Checkbox from '../components/Checkbox';
 import Presupuesto from '../components/Presupuesto';
 import Toolbar from '../components/Toolbar';
 
-function Main() {
+function Main(props) {
 //USE STATES
 
   const data = [{id:0,txt:"Una página WEB",precio:500,idText:"web"},
                            {id:1,txt:"Una campaña SEO",precio:300,idText:"seo"},
-                           {id:2,txt:"Una campaña de publicidad",precio:200,idText:"pub"}];
+                           {id:2,txt:"Una campaña de publicidad",precio:200,idText:"ads"}];
 
   const [total, setTotal] = useState(0);
 
-  const presupuestoActual=JSON.parse(localStorage.getItem("Presupuesto"));
-  const [datosPresupuesto,setDatosPresupuesto] = useState( presupuestoActual?{...presupuestoActual}:{
-                                                                nombre:"",
-                                                                cliente:"",
-                                                                checkStates:[false,false,false],
-                                                                numPaginas:0, 
-                                                                numIdiomas:0,
-                                                                total:0 });
-  const listaActualPresupuestos=JSON.parse(localStorage.getItem("ListaPresupuestos"));
-  const [listaPresupuestos,setListaPresupuestos] = useState(listaActualPresupuestos? [...listaActualPresupuestos]:
-                                                                []);
+  const lsListaPresupuestos=JSON.parse(localStorage.getItem("ListaPresupuestos"));
+  const [listaPresupuestos,setListaPresupuestos] = useState(lsListaPresupuestos? [...lsListaPresupuestos]:[]);
   const [listaOriginalPresupuestos,setListaOriginalPresupuestos] =useState([]);
+  const [datosPresupuesto,setDatosPresupuesto] = useState( {
+                                                              nombre:"",
+                                                              cliente:"",
+                                                              checkStates:[false,false,false],
+                                                              numPaginas:0, 
+                                                              numIdiomas:0,
+                                                              total:0 });
 
-  
-  // const [datosPresupuesto,setDatosPresupuesto] = useState( {
-  //                                                             nombre:"",
-  //                                                             cliente:"",
-  //                                                             checkStates:[false,false,false],
-  //                                                             numPaginas:0, 
-  //                                                             numIdiomas:0,
-  //                                                             total:0 });
-  // //USE EFFECTS
-  // useEffect(() => 
-  //   { 
-
-  //     const presupuestoActual=JSON.parse(localStorage.getItem("Presupuesto"));
-  //     if(presupuestoActual)
-  //     {
-  //       console.log({presupuestoActual});
-  //       console.log({datosPresupuesto});
-  //       setDatosPresupuesto({...datosPresupuesto,nombre:presupuestoActual.nombre});
-  //     }
-  //   },[]);
-
-
+//USE EFFECTS
   useEffect(() => 
+    { 
+
+      const lsPresupuesto=JSON.parse(localStorage.getItem("Presupuesto"));
+      if(lsPresupuesto)
+      {
+        setDatosPresupuesto( ()=> {return {...lsPresupuesto} });
+      }
+    },[]);
+  
+    useEffect(() => 
     {
+  
       setTotal( () => calculateTotal());
     },[datosPresupuesto.checkStates,datosPresupuesto.numPaginas,datosPresupuesto.numIdiomas]);
     
     useEffect( () =>
     {
-      setDatosPresupuesto( (prevDatosPresupuesto) => 
-          {
-              return {
-                  ...prevDatosPresupuesto,
-                  total : total
-              }
+      if(total)
+      {
+
+        setDatosPresupuesto( (prevDatosPresupuesto) => 
+        {
+          return {
+            ...prevDatosPresupuesto,
+            total : total
           }
-      )
-      localStorage.setItem("Presupuesto",JSON.stringify(datosPresupuesto));
-    },[total]); 
+        }
+        )
+      }
+      },[total]); 
+
+
+    useEffect( () =>
+    {
+      if(datosPresupuesto.nombre && datosPresupuesto.cliente && datosPresupuesto.total)
+      {
+        localStorage.setItem("Presupuesto",JSON.stringify(datosPresupuesto));
+      }
+    },[datosPresupuesto]); 
+    
 
     useEffect(() => 
     {
-      localStorage.setItem("ListaPresupuestos",JSON.stringify(listaPresupuestos));
-      
+      if(listaPresupuestos.length)
+      {
+        localStorage.setItem("ListaPresupuestos",JSON.stringify(listaPresupuestos));
+      }
     },[listaPresupuestos]);
 
 //COMPONENTES
     const checkBoxes = data.map( item =>
       {
-        return (<Checkbox key={item.id}
-          id= {item.id}
-          idText={item.idText}
-          handlerClick={() => toogleOneState(item.id)} 
-          defaultChecked = {datosPresupuesto.checkStates[item.id]}
-          presupuesto= {datosPresupuesto}
-          txt = {item.txt}
-          precio = {item.precio}
-          setNumPaginas = {setNumPaginas}
-          setNumIdiomas = {setNumIdiomas}
-          />)
+        const bAux=datosPresupuesto.checkStates[item.id];
+        return (
+          <Checkbox key={item.id}
+            id= {item.id}
+            idText= {item.idText}
+            handlerClick={() => toogleOneState(item.id)} 
+            defaultChecked = {bAux}
+            presupuesto= {datosPresupuesto}
+            txt = {item.txt}
+            precio = {item.precio}
+            setNumPaginas = {setNumPaginas}
+            setNumIdiomas = {setNumIdiomas}
+          />
+        )
   }
 );
 
@@ -138,24 +145,32 @@ const presupuestos = listaPresupuestos.map( item =>
     for(iAux=0;iAux<data.length;iAux++)
       iTotal += datosPresupuesto.checkStates[iAux] ? data[iAux].precio : 0;
 
-    if(!datosPresupuesto.checkStates[0])
-    {
-      setNumPaginas(0);
-      setNumIdiomas(0);
-    }
+    if(datosPresupuesto.checkStates[0])
+      iTotal += datosPresupuesto.numPaginas*datosPresupuesto.numIdiomas*30;
 
-    iTotal += datosPresupuesto.numPaginas*datosPresupuesto.numIdiomas*30;
     return iTotal;
   };
 
   function handlerChange(event)
   {
+
     const {name,value,type,checked} = event.target;
     setDatosPresupuesto( (prevDatosPresupuesto) => 
         {
+          let auxCheckStates = prevDatosPresupuesto.checkStates;
+          if(type==="checkbox")
+          {
+            if(name==="web")
+              auxCheckStates[0] = checked;
+            else if(name==="seo")
+              auxCheckStates[1] = checked;
+            else if(name==="ads")
+              auxCheckStates[2] = checked;
+          }
             return {
                 ...prevDatosPresupuesto,
-                [name] : type==="checkbox" ? checked : value
+                [name] : type !== "checkbox" ? value : "",
+                checkStates : auxCheckStates
             }
         }
     )
@@ -257,9 +272,8 @@ const presupuestos = listaPresupuestos.map( item =>
             {checkBoxes}
           </div>
           <h2>Precio total: {datosPresupuesto.total} €</h2>
-        <button className="App-button-small" onClick={addPresupuesto}>AÑADIR PRESUPUESTO</button>
-        
-        <button onClick={clearLocalStorage}>LIMPIA STORAGE</button>
+          <button className="App-button-small" onClick={addPresupuesto}>AÑADIR PRESUPUESTO</button>
+          <br/><button onClick={clearLocalStorage}>LIMPIA STORAGE</button>
         </header>
         <div className='Main-right'>
           <Toolbar 
